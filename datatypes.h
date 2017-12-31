@@ -2,7 +2,7 @@
 #define DATATYPES_H
 
 /*
-    Copyright 2012-2015 Benjamin Vedder	benjamin@vedder.se
+    Copyright 2016 Nico Ackermann	ackermann.nico82@gmail.com
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

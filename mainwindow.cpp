@@ -1,5 +1,5 @@
 /*
-    Copyright 2012-2015 Benjamin Vedder	benjamin@vedder.se
+    Copyright 2016 Nico Ackermann	ackermann.nico82@gmail.com
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -766,9 +766,9 @@ void MainWindow::timerSlot()
         }
 
         if (!mFwVersionReceived) {
-        	if(mFwRetries%20 == 0){
+            if(mFwRetries%20 == 0){
         		mPacketInterface->getFwVersion();	
-        	}
+            }
         	
             mFwRetries++;
 
@@ -2496,24 +2496,25 @@ void MainWindow::on_serialConnectButton_clicked()
     }
 
     mSerialPort->setPortName(ui->serialCombobox->currentData().toString());
-    mSerialPort->open(QIODevice::ReadWrite);
 
-    if(!mSerialPort->isOpen()) {
-        return;
-    }
 
     mSerialPort->setBaudRate(QSerialPort::Baud115200);
     mSerialPort->setDataBits(QSerialPort::Data8);
     mSerialPort->setParity(QSerialPort::NoParity);
     mSerialPort->setStopBits(QSerialPort::OneStop);
     mSerialPort->setFlowControl(QSerialPort::NoFlowControl);
+    mSerialPort->open(QIODevice::ReadWrite);
+
+    if(!mSerialPort->isOpen()) {
+        return;
+    }
 
     // For nrf
-    mSerialPort->setRequestToSend(true);
-    mSerialPort->setDataTerminalReady(true);
-    QThread::msleep(5);
-    mSerialPort->setDataTerminalReady(false);
-    QThread::msleep(100);
+    //mSerialPort->setRequestToSend(true);
+    //mSerialPort->setDataTerminalReady(true);
+    //QThread::msleep(5);
+    //mSerialPort->setDataTerminalReady(false);
+    //QThread::msleep(100);
 
     mPacketInterface->stopUdpConnection();
 }
@@ -3032,8 +3033,8 @@ void MainWindow::on_appconfWriteButton_clicked()
 
         if (ui->appconfNrfPowerM18Button->isChecked()) {
             appconf.app_nrf_conf.power = NRF_POWER_M18DBM;
-        } else if (ui->appconfNrfPowerM6Button->isChecked()) {
-            appconf.app_nrf_conf.power = NRF_POWER_M6DBM;
+        } else if (ui->appconfNrfPowerM12Button->isChecked()) {
+            appconf.app_nrf_conf.power = NRF_POWER_M12DBM;
         } else if (ui->appconfNrfPowerM6Button->isChecked()) {
             appconf.app_nrf_conf.power = NRF_POWER_M6DBM;
         } else if (ui->appconfNrfPower0Button->isChecked()) {
